@@ -17,3 +17,5 @@ Cron example:
 ```
 
 Will run the script every 30 minutes.
+
+Note: don't forget to update your node path in `delivery-checking.sh`
