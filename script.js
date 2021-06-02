@@ -4,14 +4,18 @@ const path = require('path');
 const puppeteer = require('puppeteer');
 const notifier = require('node-notifier');
 
-const URL = process.env.URL;
-const XPATH = process.env.XPATH;
+const { URL, XPATH } = process.env;
 
 (async () => {
+  // Make sure URL and XPATH is provided before launching puppeteer
+  if (!URL || !XPATH) {
+    throw new Error('URL or XPATH variables not found');
+  }
+
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    // Go to UPS tracking page
+    // Go to website tracking page
     await page.goto(URL);
 
     // Get the delivery status
@@ -21,7 +25,7 @@ const XPATH = process.env.XPATH;
       throw new Error('Element not found. Check if xpath provided is correct.');
     }
 
-    let status = await page.evaluate(el => el.textContent, element[0]);
+    let status = await page.evaluate((el) => el.textContent, element[0]);
 
     if (!status) {
       throw new Error('Delivery status not found.');
@@ -44,6 +48,7 @@ const XPATH = process.env.XPATH;
         status
       );
 
+      // Send desktop notification
       notifier.notify({
         title: 'Delivery status updated',
         message: status,
