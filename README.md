@@ -6,7 +6,7 @@
 
 Usage:
 
-1. Generate a `.env` file by running `yarn init:db`.
+1. Generate a `.env` file by running `yarn init:env`.
 2. Set the `URL` environnement variable that correspond to the url of the tracking web page.
 3. Set the `XPATH` environnement variable relative to the delivery status itself on the page.
 4. Create a cron job to run the script every x amount of time.
